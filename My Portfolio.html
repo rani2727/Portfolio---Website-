@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Raeesah Hussein - Personal Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  /* Reset */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #fef9f0;
+    color: #001f3f;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+  }
+  header {
+    background-color: #001f3f;
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  }
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+  nav a {
+    color: #ffc857;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.4rem 0.8rem;
+    border-radius: 30px;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+    border: 2px solid transparent;
+    cursor: pointer;
+  }
+  nav a:hover,
+  nav a:focus,
+  nav a.active {
+    background-color: #ffc857;
+    color: #001f3f;
+    transform: scale(1.1);
+    outline: none;
+    border-color: #ffc857;
+    box-shadow: 0 0 8px #ffc857;
+  }
+  main {
+    flex-grow: 1;
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 2rem 2rem;
+    background-color: white;
+    border-radius: 25px;
+    box-shadow:
+      0 10px 30px rgba(0,31,63,0.15),
+      0 6px 12px rgba(0,31,63,0.1);
+    min-height: 60vh;
+  }
+  section.page {
+    display: none;
+  }
+  section.page.active {
+    display: block;
+  }
+
+  /* Home Section */
+  .home-welcome {
+    padding-top: 1rem;
+    text-align: center;
+  }
+  .home-welcome h1 {
+    font-size: 3.8rem;
+    font-weight: 900;
+    margin-bottom: 0.25rem;
+    color: #001f3f;
+    text-shadow: 1.5px 1.5px 4px #e8c87caa;
+  }
+  .home-welcome h2 {
+    font-weight: 600;
+    font-size: 1.8rem;
+    margin-bottom: 1.8rem;
+    color: #bf8500;
+  }
+  .profile-image {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 6px solid #ffc857;
+    box-shadow: 0 0 25px #ffc857aa;
+    margin-bottom: 1.8rem;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  .profile-image:hover,
+  .profile-image:focus {
+    outline: none;
+    transform: scale(1.05) rotate(3deg);
+    box-shadow: 0 0 40px #ffda72;
+  }
+  .home-welcome p {
+    font-size: 1.3rem;
+    line-height: 1.5;
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+    color: #3c3c3c;
+  }
+
+  /* About Section */
+  #about h1 {
+    color: #001f3f;
+    margin-bottom: 1.5rem;
+    font-size: 2.8rem;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    text-align: center;
+  }
+  #about h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    color: #001f3f;
+    border-bottom: 3px solid #ffc857;
+    padding-bottom: 0.3rem;
+    font-size: 1.8rem;
+  }
+  #about p, #about ul {
+    font-size: 1.2rem;
+    color: #2c3e50;
+    margin-bottom: 1.6rem;
+    line-height: 1.5;
+  }
+  #about ul {
+    list-style-type: disc;
+    margin-left: 2rem;
+  }
+  #about ul li {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Skills badges */
+  .skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+  }
+  .skill-item {
+    background: #ffefbf;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 0 8px #ffc85766;
+    min-width: 160px;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #001f3f;
+  }
+  .skill-icon {
+    font-size: 1.8rem;
+  }
+  .skill-tag {
+    font-style: italic;
+    font-weight: 500;
+    color: #7a6e48;
+  }
+
+  /* Projects Section */
+  #projects h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: #001f3f;
+    letter-spacing: 0.05em;
+  }
+  .project-description {
+    max-width: 700px;
+    margin: 0 auto 2rem auto;
+    font-size: 1.15rem;
+    color: #3c3c3c;
+    line-height: 1.5;
+  }
+  .carousel {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,31,63,0.15);
+    background: #fff8e7;
+    overflow: hidden;
+  }
+  .carousel-slide {
+    display: none;
+    padding: 1rem 1rem 2rem 1rem;
+    text-align: center;
+  }
+  .carousel-slide.active {
+    display: block;
+  }
+  .carousel-slide img {
+    width: 100%;
+    max-height: 350px;
+    object-fit: contain;
+    border-radius: 6px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+  }
+  .carousel-slide p {
+    margin-top: 10px;
+    font-weight: 600;
+    color: #001f3f;
+  }
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #001f3f;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+    user-select: none;
+  }
+  .carousel-button:hover,
+  .carousel-button:focus {
+    opacity: 1;
+    outline: none;
+  }
+  .carousel-button.prev {
+    left: 0;
+    border-radius: 5px 0 0 5px;
+  }
+  .carousel-button.next {
+    right: 0;
+  }
+  .carousel-reflection {
+    max-width: 700px;
+    margin: 1rem auto 3rem;
+    font-style: italic;
+    color: #7a6e48;
+    font-size: 1rem;
+  }
+
+  /* Contact Section */
+  #contact h1 {
+    text-align: center;
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: #001f3f;
+    margin-bottom: 2rem;
+    letter-spacing: 0.05em;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    gap: 1.3rem;
+  }
+  label {
+    font-weight: 600;
+    color: #333;
+    font-size: 1.1rem;
+  }
+  input, textarea {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+  }
+  input:focus, textarea:focus {
+    border-color: #ffc857;
+    box-shadow: 0 0 8px #ffc85788;
+    outline: none;
+  }
+  textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+  button[type="submit"] {
+    background-color: #001f3f;
+    color: #ffc857;
+    border: none;
+    padding: 0.85rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,31,63,0.45);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  button[type="submit"]:hover,
+  button[type="submit"]:focus {
+    background-color: #bf8500;
+    outline: none;
+    box-shadow: 0 6px 20px rgba(191,133,0,0.55);
+  }
+  .alt-contact {
+    margin: 3rem auto 0 auto;
+    font-size: 1.1rem;
+    color: #333;
+    max-width: 600px;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .alt-contact h2 {
+    font-size: 1.6rem;
+    color: #001f3f;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  .alt-contact p {
+    margin-bottom: 0.6rem;
+  }
+  .alt-contact a {
+    color: #001f3f;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.3s ease;
+  }
+  .alt-contact a:hover,
+  .alt-contact a:focus {
+    color: #ffc857;
+    outline: none;
+    text-decoration: underline;
+  }
+
+  /* Back-to-top button */
+  #backToTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: #ffc857;
+    color: #001f3f;
+    cursor: pointer;
+    padding: 0.7rem 1rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(255,200,87,0.8);
+    transition: background-color 0.3s ease;
+  }
+  #backToTopBtn:hover,
+  #backToTopBtn:focus {
+    background-color: #bf8500;
+    outline: none;
+    box-shadow: 0 6px 12px rgba(191,133,0,0.9);
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    main {
+      margin: 2rem 1rem;
+      padding: 1.5rem 1rem;
+      border-radius: 15px;
+    }
+    .home-welcome h1 {
+      font-size: 2.8rem;
+    }
+    .home-welcome h2 {
+      font-size: 1.3rem;
+    }
+    .home-welcome p {
+      font-size: 1.1rem;
+    }
+    #about h1, #projects h1, #contact h1 {
+      font-size: 2.4rem;
+    }
+    #about h2 {
+      font-size: 1.5rem;
+    }
+    #about p, #about ul,
+    #projects .project-description,
+    #projects .carousel-reflection,
+    form, .alt-contact {
+      font-size: 1rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav role="navigation" aria-label="Main navigation">
+    <a href="#" class="active" data-target="home" aria-current="page">Home</a>
+    <a href="#" data-target="about">About Me</a>
+    <a href="#" data-target="projects">Projects</a>
+    <a href="#" data-target="contact">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <!-- Home Page -->
+  <section id="home" class="page active" tabindex="0" aria-label="Homepage">
+    <div class="home-welcome">
+      <h1>Welcome to My Portfolio</h1>
+      <h2>Raeesah Hussein</h2>
+      <img src="my photo.jpg" alt="Profile photo of Raeesah Hussein" class="profile-image" />
+      <p>Hello! I'm Raeesah, a passionate Year 13 student with a love for technology and creativity. I am currently developing my skills in Computer Science and enjoy reading, watching movies, playing games, and crocheting in my free time. My goal is to become a skilled individual ready to create innovative solutions that make a difference.</p>
+    </div>
+  </section>
+
+  <!-- About Me Page -->
+  <section id="about" class="page" tabindex="0" aria-label="About Me page">
+    <h1>About Me</h1>
+    <p>My name is Raeesah Hussein. I am a Year 13 student at Lautoka Muslim College. I am passionate about exploring the world of technology and continuously developing my skills, with a goal to contribute positively to this ever-evolving field.</p>
+    <h2>Education</h2>
+    <p>I am currently completing my final year of secondary education (Year 13) at Lautoka Muslim College, focusing on subjects that align with my interest in computing and problem-solving.</p>
+    <h2>Skills</h2>
+    <p>As a Year 13 student, I'm actively building a foundation of both technical and soft skills. I'm particularly drawn to technology and design, and I'm always eager to learn. Some of the skills I've been developing include:</p>
+    <ul>
+      <li><strong>Web Basics:</strong> Gaining familiarity with HTML and CSS for structuring and styling web content, and I'm beginning to explore JavaScript.</li>
+      <li><strong>Digital Literacy:</strong> Confident in using Microsoft Office Suite and Google Workspace for school projects and presentations.</li>
+      <li><strong>Visual Communication:</strong> Basic experience with design tools like Canva to create visuals.</li>
+      <li><strong>Communication:</strong> Enhancing written and verbal communication through presentations and report writing.</li>
+      <li><strong>Teamwork & Collaboration:</strong> Experience collaborating on assignments and extracurricular activities.</li>
+      <li><strong>Problem-Solving:</strong> Enjoy analyzing challenges and finding creative solutions.</li>
+      <li><strong>Eagerness to Learn:</strong> Strong desire to acquire new knowledge, especially in technology.</li>
+    </ul>
+    <h2>Hobbies</h2>
+    <ul>
+      <li>Crocheting: A relaxing hobby creating handmade items.</li>
+      <li>Reading: Broadens my perspectives and vocabulary.</li>
+      <li>Exploring Technology: Staying updated with tech trends and practicing coding.</li>
+      <li>Spending Time Outdoors: Enjoying Fiji's natural beauty through walks.</li>
+      <li>Creative Media: Watching films and listening to music for inspiration.</li>
+    </ul>
+    <h2>Achievements</h2>
+    <ul>
+      <li>Consistently maintaining a strong academic record.</li>
+      <li>Presenting challenging school projects that incorporate technology.</li>
+      <li>Active participation in class discussions and collaboration.</li>
+      <li>Developing this portfolio website as a learning project.</li>
+    </ul>
+  </section>
+
+  <!-- Projects Page -->
+  <section id="projects" class="page" tabindex="0" aria-label="Projects page">
+    <h1>My Projects</h1>
+    <div class="carousel" aria-live="polite" aria-label="Project image carousel">
+      <div class="carousel-slide active" role="group" aria-roledescription="slide" aria-label="Economics project">
+        <img src="Eco 1.jpg" alt="Vunato rubbish dump case study" />
+        <p class="project-description"><strong>Economics Project:</strong> A case study on the negative externalities of consumption - Vunato rubbish Dump, Lautoka.</p>
+        <p class="carousel-about"> This project, titled explores how overconsumption and poor waste management have led to severe environmental and health consequences for nearby communities. It uses both primary research (surveys and observations) and secondary sources to assess the spillover effects, including air and water pollution, and diseases like dengue fever. The study recommends policy interventions such as fines, taxes, community education, and sustainable practices to internalize these externalities and improve public well-being.This project strengthened my analytical skills and taught me the importance of environmental impact assessment.</p>
+      </div>
+      <div class="carousel-slide" role="group" aria-roledescription="slide" aria-label="Accounting project">
+        <img src="rbimage.png" alt="Financial report analysis of RB Patel" />
+        <p class="project-description"><strong>Accounting Project:</strong> Analysis of financial report of RB Patel and creating a detailed report.</p>
+        <p class="carousel-about"> This project provides an overview of RB Patel Group Ltd, a publicly listed Fijian company that started in the 1930s as a small family-owned supermarket and has grown into a national retail chain with twelve stores. It outlines the company’s mission, vision, core values, corporate governance structure, and principal business activities in retail, wholesale, and property management. The report also details the roles of the CEO, board of directors, and auditors, emphasizing RB Patel’s commitment to ethical management, customer service, and community engagement.This project, Improved my understanding of business finance and report presentation skills.</p>
+      </div>
+      <div class="carousel-slide" role="group" aria-roledescription="slide" aria-label="Website project">
+        <img src="myimage .jpg" alt="Portfolio website project" />
+        <p class="project-description"><strong>Website Project:</strong> Building this personal portfolio website from scratch using HTML, CSS, and JavaScript.</p>
+        <p class="carousel-about"> This project involves the creation of a personal portfolio website designed to showcase the individual’s skills, achievements, and projects in a professional and visually appealing format. The website was built using HTML, CSS, and JavaScript, featuring sections like an introduction, education, projects, and contact details to provide a complete overview of the individual’s background. It serves as a digital resume and creative platform, helping the individual establish an online presence for career, academic, or freelance opportunities.Advanced my web development skills and ability to build responsive, interactive websites.</p>
+      </div>
+      <button class="carousel-button prev" aria-label="Previous project" tabindex="0">&#10094;</button>
+      <button class="carousel-button next" aria-label="Next project" tabindex="0">&#10095;</button>
+    </div>
+  </section>
+
+  <!-- Contact Page -->
+  <section id="contact" class="page" tabindex="0" aria-label="Contact page">
+    <h1>Contact Me</h1>
+    <form action="#" method="post" novalidate>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Your full name" required />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="Your email address" required />
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" placeholder="Write your message here" required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+    <section class="alt-contact" aria-label="Alternative contact options">
+      <h2>Alternative Contact Options</h2>
+      <p>Email: <a href="mailto:raeesahhussein16@gmail.com">raeesahhussein16@gmail.com</a></p>
+      <p>Phone: <a href="tel:+1234567890">(679) 2760645</a></p>
+       <p>GitHub: <a href="https://github.com/rani2727" target="_blank" rel="noopener noreferrer">https://github.com/rani2727</a></p>
+    </section>
+  </section>
+</main>
+
+<button id="backToTopBtn" aria-label="Back to top">↑</button>
+
+<footer>
+  <p>© 2024 Raeesah Hussein. All rights reserved.</p>
+</footer>
+
+<script>
+  // Navigation and section switching
+  const navLinks = document.querySelectorAll('nav a');
+  const pages = document.querySelectorAll('section.page');
+  const backToTopBtn = document.getElementById('backToTopBtn');
+
+  navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+          e.preventDefault();
+          const targetId = link.getAttribute('data-target');
+          // Show the target page, hide others
+          pages.forEach(page => {
+              if (page.id === targetId) {
+                  page.classList.add('active');
+                  page.focus();
+              } else {
+                  page.classList.remove('active');
+              }
+          });
+          // Update nav active states and aria-current
+          navLinks.forEach(nav => {
+              if (nav === link) {
+                  nav.classList.add('active');
+                  nav.setAttribute('aria-current', 'page');
+              } else {
+                  nav.classList.remove('active');
+                  nav.removeAttribute('aria-current');
+              }
+          });
+          // Scroll to top when switching pages
+          window.scrollTo({top: 0, behavior: 'smooth'});
+      });
+  });
+
+  // Back to Top button show/hide
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 300) {
+      backToTopBtn.style.display = "block";
+    } else {
+      backToTopBtn.style.display = "none";
+    }
+  });
+
+  backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  });
+
+  // Carousel functionality
+  const slides = document.querySelectorAll('.carousel-slide');
+  const prevBtn = document.querySelector('.carousel-button.prev');
+  const nextBtn = document.querySelector('.carousel-button.next');
+  let currentSlide = 0;
+  const totalSlides = slides.length;
+
+  function updateCarousel() {
+    slides.forEach((slide, index) => {
+      slide.classList.toggle('active', index === currentSlide);
+    });
+  }
+
+  prevBtn.addEventListener('click', () => {
+    currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+    updateCarousel();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    updateCarousel();
+  });
+
+  // Auto-advance carousel every 5 seconds
+  setInterval(() => {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    updateCarousel();
+  }, 5000);
+
+  // Initialize carousel on page load
+  updateCarousel();
+</script>
+
+</body>
+</html>
+
